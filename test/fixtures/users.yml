@@ -1,0 +1,26 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                   :integer          not null, primary key
+#  display_name         :string           not null
+#  profile_image_url    :string           not null
+#  fb_access_token      :string           not null
+#  authentication_token :string           not null
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  display_name: MyString
+  profile_image_url: MyString
+  fb_access_token: MyString
+  authentication_token: MyString
+
+two:
+  display_name: MyString
+  profile_image_url: MyString
+  fb_access_token: MyString
+  authentication_token: MyString
