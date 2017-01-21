@@ -2,13 +2,12 @@
 #
 # Table name: users
 #
-#  id                   :integer          not null, primary key
-#  display_name         :string           not null
-#  profile_image_url    :string           not null
-#  fb_access_token      :string           not null
-#  authentication_token :string           not null
-#  created_at           :datetime         not null
-#  updated_at           :datetime         not null
+#  id                :integer          not null, primary key
+#  display_name      :string           not null
+#  profile_image_url :string           not null
+#  fb_access_token   :string           not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
 #
 
 require 'test_helper'

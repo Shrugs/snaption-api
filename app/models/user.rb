@@ -2,25 +2,23 @@
 #
 # Table name: users
 #
-#  id                   :integer          not null, primary key
-#  display_name         :string           not null
-#  profile_image_url    :string           not null
-#  fb_access_token      :string           not null
-#  authentication_token :string           not null
-#  created_at           :datetime         not null
-#  updated_at           :datetime         not null
+#  id                :integer          not null, primary key
+#  display_name      :string           not null
+#  profile_image_url :string           not null
+#  fb_access_token   :string           not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
 #
 
 class User < ApplicationRecord
-  validates :authentication_token, uniqueness: true
+  has_many :api_keys
 
-  AUTH_TOKEN_LENGTH = 30
+  validates_presence_of :api_keys
 
-  before_create :generate_authentication_token!
+  before_create :generate_api_key!
 
-  def self.generate_authentication_token!
-    begin
-      self.authentication_token = SecureRandom.hex(AUTH_TOKEN_LENGTH)
-    end while self.class.exists?(authentication_token: authentication_token)
+  def generate_api_key
+    self.api_keys << ApiKey.create!
   end
+
 end
