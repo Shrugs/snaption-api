@@ -14,12 +14,4 @@
 
 class Snap < ApplicationRecord
   belongs_to :grouping
-
-  has_attached_file :image, styles: {
-    large: '2160x2160>',
-    medium: '800x800>',
-    thumbnail: '150x150>'
-  }, default_url: '/images/:style/missing.png'
-
-  validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170122153613) do
+ActiveRecord::Schema.define(version: 20170122171848) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,12 +59,9 @@ ActiveRecord::Schema.define(version: 20170122153613) do
 
   create_table "snaps", force: :cascade do |t|
     t.integer  "grouping_id"
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "image_src",   null: false
     t.index ["grouping_id"], name: "index_snaps_on_grouping_id", using: :btree
   end
 
