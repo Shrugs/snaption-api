@@ -27,6 +27,7 @@ gem 'paperclip', '~> 5.1.0'
 gem 'fog-aws'
 gem 'aws-sdk', '>= 2.0.34'
 gem 'annotate'
+gem 'koala'
 
 group :development do
   gem 'listen', '~> 3.0.5'

@@ -17,10 +17,21 @@ class User < ApplicationRecord
 
   validates_presence_of :api_keys
 
-  before_create :generate_api_key!
+  before_validation :generate_api_key!, on: :create
+  before_validation :populate_facebook_info, on: :create
 
-  def generate_api_key
+  def generate_api_key!
     self.api_keys << ApiKey.create!
+  end
+
+  def self.strong_params
+    [
+      :fb_access_token
+    ]
+  end
+
+  def populate_facebook_info
+    self.assign_attributes(FacebookInfoFetcher.new(self.fb_access_token).user_info)
   end
 
 end
