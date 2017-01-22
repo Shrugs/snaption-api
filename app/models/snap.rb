@@ -23,4 +23,10 @@ class Snap < ApplicationRecord
       created_at: created_at
     }
   end
+
+  def self.strong_params
+    [
+      :image_src
+    ]
+  end
 end

@@ -23,4 +23,10 @@ class Caption < ApplicationRecord
       created_at: created_at
     }
   end
+
+  def self.strong_params
+    [
+      :text
+    ]
+  end
 end

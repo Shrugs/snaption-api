@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
 
-  before_action :set_game, only: [:join, :show]
+  before_action :set_game, only: [:join, :show, :play_caption, :play_snap]
 
   def show
     render json: { game: @game.to_hash }
@@ -36,6 +36,38 @@ class GamesController < ApplicationController
     end
   end
 
+  def play_caption
+    begin
+      Game.transaction do
+        caption = Caption.create!(caption_create_params.merge({
+          user_id: current_user.id,
+          game_id: @game.id
+        }))
+        caption.save!
+
+        redirect_to action: :show
+      end
+    rescue => e
+      render json: { error: e.message }, status: :bad_request
+    end
+  end
+
+  def play_snap
+    begin
+      Game.transaction do
+        snap = Snap.create!(snap_create_params.merge({
+          user_id: current_user.id,
+          game_id: @game.id
+        }))
+        snap.save!
+
+        redirect_to action: :show
+      end
+    rescue => e
+      render json: { error: e.message }, status: :bad_request
+    end
+  end
+
   private
 
   def create_game_params
@@ -44,5 +76,12 @@ class GamesController < ApplicationController
 
   def set_game
     @game ||= Game.find(params[:id])
+  end
+
+  def caption_create_params
+    params.require(:caption).permit(Caption.strong_params)
+  end
+  def snap_create_params
+    params.require(:snap).permit(Snap.strong_params)
   end
 end
