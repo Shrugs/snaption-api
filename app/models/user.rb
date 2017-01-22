@@ -24,14 +24,13 @@ class User < ApplicationRecord
     self.api_keys << ApiKey.create!
   end
 
+  def populate_facebook_info
+    self.assign_attributes(FacebookInfoFetcher.new(self.fb_access_token).user_info)
+  end
+
   def self.strong_params
     [
       :fb_access_token
     ]
   end
-
-  def populate_facebook_info
-    self.assign_attributes(FacebookInfoFetcher.new(self.fb_access_token).user_info)
-  end
-
 end
