@@ -12,4 +12,7 @@
 class Grouping < ApplicationRecord
   belongs_to :user
   belongs_to :game
+
+  has_many :snaps
+  has_many :captions
 end

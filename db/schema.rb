@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170122152328) do
+ActiveRecord::Schema.define(version: 20170122153613) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,14 @@ ActiveRecord::Schema.define(version: 20170122152328) do
     t.datetime "updated_at",           null: false
     t.index ["authentication_token"], name: "index_api_keys_on_authentication_token", unique: true, using: :btree
     t.index ["user_id"], name: "index_api_keys_on_user_id", using: :btree
+  end
+
+  create_table "captions", force: :cascade do |t|
+    t.integer  "grouping_id"
+    t.string   "text",        null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["grouping_id"], name: "index_captions_on_grouping_id", using: :btree
   end
 
   create_table "games", force: :cascade do |t|
@@ -36,6 +44,28 @@ ActiveRecord::Schema.define(version: 20170122152328) do
     t.datetime "updated_at", null: false
     t.index ["game_id"], name: "index_groupings_on_game_id", using: :btree
     t.index ["user_id"], name: "index_groupings_on_user_id", using: :btree
+  end
+
+  create_table "snap_caption_pairs", force: :cascade do |t|
+    t.integer  "game_id"
+    t.integer  "snap_id"
+    t.integer  "caption_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["caption_id"], name: "index_snap_caption_pairs_on_caption_id", using: :btree
+    t.index ["game_id"], name: "index_snap_caption_pairs_on_game_id", using: :btree
+    t.index ["snap_id"], name: "index_snap_caption_pairs_on_snap_id", using: :btree
+  end
+
+  create_table "snaps", force: :cascade do |t|
+    t.integer  "grouping_id"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["grouping_id"], name: "index_snaps_on_grouping_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
