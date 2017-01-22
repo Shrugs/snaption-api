@@ -2,11 +2,12 @@
 #
 # Table name: captions
 #
-#  id          :integer          not null, primary key
-#  grouping_id :integer
-#  text        :string           not null
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id         :integer          not null, primary key
+#  text       :string           not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  user_id    :integer
+#  game_id    :integer
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

@@ -2,17 +2,25 @@
 #
 # Table name: snaps
 #
-#  id                 :integer          not null, primary key
-#  grouping_id        :integer
-#  image_file_name    :string
-#  image_content_type :string
-#  image_file_size    :integer
-#  image_updated_at   :datetime
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
+#  id         :integer          not null, primary key
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  image_src  :string           not null
+#  user_id    :integer
+#  game_id    :integer
 #
 
 class Snap < ApplicationRecord
   belongs_to :game
   belongs_to :user
+
+  def to_hash
+    {
+      type: 'snap',
+      image_src: image_src,
+      user_id: user_id,
+      game_id: game_id,
+      created_at: created_at
+    }
+  end
 end

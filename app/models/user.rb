@@ -33,4 +33,16 @@ class User < ApplicationRecord
       :fb_access_token
     ]
   end
+
+  def to_hash
+    {
+      id: id,
+      display_name: display_name,
+      profile_image_url: profile_image_url
+    }
+  end
+
+  def in_game_with_id(game_id)
+    games.exists?(game_id)
+  end
 end

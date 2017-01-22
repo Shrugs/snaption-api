@@ -12,15 +12,19 @@ class Game < ApplicationRecord
   has_many :users, through: :groupings
   has_many :groupings, dependent: :destroy
 
-  # has_many :captions
-  # has_many :snaps
+  has_many :captions, dependent: :destroy
+  has_many :snaps, dependent: :destroy
   has_many :snap_caption_pairs, dependent: :destroy
 
   before_create :create_seed_caption!
 
   def create_seed_caption!
     text = CaptionGenerator.random_caption
-    # @TODO(shrugs) - add the caption to this game
+    self.captions << Caption.create!(text: text)
+  end
+
+  def feed
+    (captions + snaps).sort_by(&:created_at)
   end
 
   def self.strong_params
@@ -29,9 +33,11 @@ class Game < ApplicationRecord
     }
   end
 
-  def to_json
+  def to_hash
     {
-      users: users.map { |user| { id: user.id, display_name: user.display_name } }
+      id: id,
+      users: users.map(&:to_hash),
+      feed: feed.map(&:to_hash)
     }
   end
 end

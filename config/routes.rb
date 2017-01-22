@@ -2,5 +2,10 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
-  resource :user
+  resources :users
+  resources :games do
+    member do
+      put 'join', to: 'games#join'
+    end
+  end
 end
