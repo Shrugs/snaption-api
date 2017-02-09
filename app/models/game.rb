@@ -2,9 +2,12 @@
 #
 # Table name: games
 #
-#  id         :integer          not null, primary key
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id                :integer          not null, primary key
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  workflow_state    :string           not null
+#  requested_user_id :integer
+#  play_type         :integer          default("0"), not null
 #
 
 class Game < ApplicationRecord
@@ -105,7 +108,9 @@ class Game < ApplicationRecord
     {
       id: id,
       users: users.map(&:to_hash),
-      feed: feed.map(&:to_hash)
+      feed: feed.map(&:to_hash),
+      requested_user_id: requested_user_id,
+      play_type: play_type
     }
   end
 
