@@ -8,15 +8,16 @@ class GamesController < ApplicationController
 
   def create
     # @TODO(shrugs) - will probably want to optimize this function later
+    #   for example, we do a lookup on every user id to confirm that it exists
     begin
       user_ids = create_game_params[:user_ids]
       # @TODO(shrugs) - move this kind of logic into some sort of validator
       raise StandardError.new('Must have at least 2 people in the game') if user_ids.length < 2
 
       Game.transaction do
-        game = Game.create!
-        game_id = game.id
-        Grouping.create!(user_ids.map { |id| { user_id: id, game_id: game_id } })
+        game = Game.create!({
+          groupings: user_ids.map { |id| Grouping.new(user: User.find(id)) }
+        })
 
         render json: { game: game.to_hash }
       end
@@ -39,11 +40,11 @@ class GamesController < ApplicationController
   def play_caption
     begin
       Game.transaction do
-        caption = Caption.create!(caption_create_params.merge({
+        caption = Caption.new(caption_create_params.merge({
           user_id: current_user.id,
           game_id: @game.id
         }))
-        caption.save!
+        @game.make_play!(current_user, caption)
 
         redirect_to action: :show
       end
@@ -55,11 +56,11 @@ class GamesController < ApplicationController
   def play_snap
     begin
       Game.transaction do
-        snap = Snap.create!(snap_create_params.merge({
+        snap = Snap.new(snap_create_params.merge({
           user_id: current_user.id,
           game_id: @game.id
         }))
-        snap.save!
+        @game.make_play!(current_user, snap)
 
         redirect_to action: :show
       end
