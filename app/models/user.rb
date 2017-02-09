@@ -8,8 +8,11 @@
 #  fb_access_token   :string           not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  fb_id             :string           not null
 #
 
+# @TOOD(shrugs) - deleting a user whose turn it is in a game causes an fk violation
+#   ... so handle that, I guess
 class User < ApplicationRecord
   has_many :api_keys
   has_many :groupings, dependent: :destroy

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170128191034) do
+ActiveRecord::Schema.define(version: 20170209010505) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 20170128191034) do
     t.string   "fb_access_token",   null: false
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.string   "fb_id",             null: false
   end
 
   add_foreign_key "games", "users", column: "requested_user_id"

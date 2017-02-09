@@ -8,7 +8,8 @@ class FacebookInfoFetcher
     fb_id = profile[:id]
     {
       display_name: profile[:name],
-      profile_image_url: "https://graph.facebook.com/#{fb_id}/picture?type=large"
+      profile_image_url: "https://graph.facebook.com/#{fb_id}/picture?type=large",
+      fb_id: fb_id
     }
   end
 end
